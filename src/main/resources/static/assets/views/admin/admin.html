@@ -1,0 +1,237 @@
+<nav class="navbar navbar-default navbar-dark bg-dark navbar-fixed-top">
+  <div class="navbar-header">
+  <a class="navbar-brand" href="#"><img
+				class="" src="assets/html/img/logos/logo-sm.png" width="80" alt=""></a>
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav navbar-right">
+	         	<li class="service-link"><a href=""  ng-click="orderDetails()"><span class="link-service"><i class="fa fa-bell-o" aria-hidden="true"></i></span></a></li>
+				<li class="service-link"><a href=""  data-toggle="modal" data-target="#menu" ng-click="addMenu()"><span class="link-service">Setup Menu</span></a></li>
+				<li class="service-link"><a href="" data-toggle="modal" data-target="#content" ng-click="setupContent()"><span class="link-service">Setup Content</span></a></li>
+					
+				<li><a href="" class="dropdown-toggle" data-toggle="dropdown" ng-init="displayAdminProfile()">
+						<i class="fa fa-user-circle" aria-hidden="true"></i>
+				</a>
+					<ul id="login-dp" class="dropdown-menu">
+						<li>
+							<div class="navbar-login">
+								<div class="row">
+									<div class="col-lg-4">
+										<p class="text-center">
+											<span><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+										</p>
+									</div>
+									<div class="col-lg-8">
+                                        <p class="text-left"><strong>{{userdetail.firstname}} {{userdetail.lastname}}</strong></p>
+                                        <p class="text-left small">{{userdetail.email}}</p>
+                                        <p class="text-left">
+                                            <a href="" ng-click="goToProfile()" class="btn btn-primary btn-block btn-sm">View Profile</a>
+                                        </p>
+                                    </div>
+									
+								</div>
+							</div>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<div class="navbar-login navbar-login-session">
+								<div class="row">
+									<div class="col-lg-12">
+										<p>
+											<a href="#" class="btn btn-danger btn-block">Logout</a>
+										</p>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+  </div>
+</nav>
+
+
+<div class="container list-items">
+	<div class="container-fluid">
+		<div class="col-lg-12 col-md-12" ng-hide="viewOrderDetails">
+			<div class="card card-nav-tabs">
+				<div class="card-header"   ng-init="getMenus()">
+					<h4 class="title">Menu Details</h4>
+				</div>
+				<div class="card-content table-responsive">
+					<table class="table table-hover">
+						<thead class="text-warning">
+							<th>Menu Name</th>
+							<th>Price</th>
+							<th>Service Type</th>
+							<th>Category</th>
+							<th>Menu Type</th>
+							<th>Description</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="menu in menuList">
+								<td>{{menu.name}}</td>
+								<td>{{menu.price}}</td>
+								<td>{{menu.avlType}}</td>
+								<td>{{menu.category}}</td>
+								<td>{{menu.type}}</td>
+								<td>{{menu.description}}</td>
+								<td><a href="" data-toggle="modal"
+									data-target="#menu" ng-click="eachMenu(menu)"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+	<div class="col-lg-12 col-md-12" ng-show="viewOrderDetails">
+			<div class="card card-nav-tabs">
+				<div class="card-header"   ng-init="getOrderDetails()">
+					<h4 class="title">Order Details</h4>
+				</div>
+				<div class="card-content table-responsive">
+					<table class="table table-hover">
+						<thead class="text-warning">
+							<th>Table No</th>
+							<th>Order Time</th>
+							<th>Status</th>
+							<th>Total Price</th>
+							<th>Menus</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="order in orderList">
+								<td>{{order.tableName}}</td>
+								<td>{{order.orderTime}}</td>
+								<td>{{order.orderStatus}}</td>
+								<td><a>menus</a></td>
+								<td>{{order.totalPrice}}</td>
+								<td><a href="" data-toggle="modal"
+									data-target="#orderDetails" ng-click="eachOrder(order)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+  
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="orderDetails" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+						<h4 class="title">Order Details</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Table No</label> 
+							<input type="text"	ng-model="order.tableName"  class="form-control" disable>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Order Time</label>
+							 <input	type="text"  ng-model="order.orderTime" class="form-control" disable>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Total Price</label>
+						     <input	type="text"  ng-model="order.totalPrice" class="form-control" disable>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Order Status</label> 
+							 <input	type="text"  ng-model="order.orderStatus" class="form-control" list="orderStatusList">
+							 <datalist id="orderStatusList">
+							 <option ng-repeat="ordst in orderStatusList" value="{{ordst.name}}">
+							</datalist>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="updateOrder()">Save</button>
+				<button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="deleteOrder()">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div id="menu" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+						<h4 class="title">Menu Details</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Menu Name</label> 
+							<input type="text"	ng-model="menu.name"  class="form-control">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Price</label>
+							 <input	type="text"  ng-model="menu.price" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Service Type</label>
+						    <input	type="text"  ng-model="menu.avlType" class="form-control" list="menuAvlList" >
+							<datalist id="menuAvlList">
+							 <option ng-repeat="menuavl in menuAvlList" value="{{menuavl.name}}">
+							</datalist>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Category</label> 
+							 <input	type="text"  ng-model="menu.category" class="form-control" list="menuCatList" >
+							<datalist id="menuCatList">
+							 <option ng-repeat="menucat in menuCatList" value="{{menucat.name}}">
+							</datalist>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Menu Type</label> 
+							<input type="text"	ng-model="menu.type"  class="form-control" list="menuTypeList" >
+							<datalist id="menuTypeList">
+							 <option ng-repeat="menuty in menuTypeList" value="{{menuty.name}}">
+							</datalist>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Description</label>
+                          <textarea type="text" class="form-control" ng-model="menu.description"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="saveMenu()">Save</button>
+				<button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="deleteMenu()">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>

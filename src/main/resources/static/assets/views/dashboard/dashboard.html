@@ -1,0 +1,406 @@
+<nav class="navbar navbar-default navbar-dark bg-dark navbar-fixed-top">
+  <div class="navbar-header">
+  <a class="navbar-brand" href="#" ng-click="tabClick('HOME')"><img
+				class="" src="assets/html/img/logos/logo-sm.png" width="80" alt=""></a>
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div class="navbar-collapse collapse" ng-init="getAllLanguages();getAllGenres()">
+    <ul class="nav navbar-nav">
+  <li class="{{homeTab}}"><a href="#" ng-click="tabClick('HOME')">HOME</a></li>
+				<li class="dropdown {{moviTab}}"><a href="#"
+					ng-click="tabClick('LANG')" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">MOVIES<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li ng-repeat="lang in langlist"><a href="#"
+							ng-click="eachLangSelect(lang)">{{lang.displayName}}</a></li>
+					</ul></li>
+
+				<li class="dropdown {{moviGenerTab}}"><a href="#"
+					ng-click="tabClick('GENER')" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">MOVIES GENERS<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li ng-repeat="gener in genreslist"><a href="#"
+							ng-click="eachGenreSelect(gener)">{{gener.displayName}}</a></li>
+					</ul></li>
+    </ul>
+		<ul class="nav navbar-nav navbar-right">
+				<li class="service-link"><a href="#"  ng-click="viewResturnatMenus()"><span class="link-service">MENUS</span></a></li>
+				<li class="service-link"><a href="#" ng-click="viewCustomerOrderDetails()"><span class="link-service">ORDER DETAILS</span></a></li>
+				<li class="service-link"><a href="#"  ng-click="viewSoftwares()"><span class="link-service">SOFTWARES</span></a></li>	
+			</ul>
+
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="masthead" ng-hide="discoverHeader">
+	<div class="container">
+		<div class="intro-text">
+			<div class="logo-landing">
+				<img src="assets/html/img/logos/logo.png" width="180" alt="WIFY">
+			</div>
+			<div class="intro-lead-in">Welcome To WIFY Studio!</div>
+			<div class="intro-heading">A Product by LogicQ</div>
+			<div class="intro-heading">With Exclusive Marketing Patner
+				Synergia</div>
+			<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger"
+				ng-click="onClickDiscoverNow()">Discover Foods With Movies</a>
+		</div>
+	</div>
+</header>
+
+<!-- Slider Start -->
+<section class="slider-container" ng-hide="discoverRecentMovis">
+	<div class="container">
+
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+				<li data-target="#myCarousel" data-slide-to="3"></li>
+				<li data-target="#myCarousel" data-slide-to="4"></li>
+			</ol>
+
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner  portfolio-item">
+				<div class="item active"
+					ng-repeat="recentMovi in recentMovies | limitTo : 1">
+					<div class="card">
+						<a href="#" ng-click="playMovi(recentMovi)"
+							style="background-image: url({{recentMovi.poster_url}})"><span
+							class="play-button"></span></a>
+						<div class="card-body">
+							<p class="card-type">{{recentMovi.genreType}}</p>
+							<h4 class="card-title">{{recentMovi.moviname}}</h4>
+							<p class="card-rating">
+								<i class="fa fa-star"></i> {{recentMovi.rating}}/10
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="item" ng-repeat="recentMovi in recentMovies">
+					<div class="card">
+						<a href="#" ng-click="playMovi(recentMovi)"
+							style="background-image: url({{recentMovi.poster_url}})"><span
+							class="play-button"></span></a>
+						<div class="card-body">
+							<p class="card-type">{{recentMovi.genreType}}</p>
+							<h4 class="card-title">{{recentMovi.moviname}}</h4>
+							<p class="card-rating">
+								<i class="fa fa-star"></i> {{recentMovi.rating}}/10
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<span><i class="fa fa-angle-left" aria-hidden="true"></i></span> <span
+				class="sr-only">Previous</span>
+			</a> <a class="right carousel-control" href="#myCarousel"
+				data-slide="next"> <span><i class="fa fa-angle-right"
+					aria-hidden="true"></i></span> <span class="sr-only">Next</span>
+			</a>
+
+		</div>
+	</div>
+</section>
+<div class="container list-items">
+	<h4>{{moviSearchContext}}</h4>
+	<div class="row" ng-hide="moviSpecificeDetails">
+		<div id="products" class="row list-group">
+			<div class="item  col-xs-3 col-lg-3 grid-group-item list-group-item"
+				ng-repeat="mov in moviesList">
+				<div class="thumbnail">
+					<a href="#" ng-click="playMovi(mov)"> <img
+						class="group list-group-image rounded" src="{{mov.poster_url}}"
+						alt="" /><span class="play-button"></span></a>
+					<div class="caption">
+						<h4 class="group inner list-group-item-heading">{{mov.moviname}}</h4>
+						<p class="card-rating">
+							<i class="fa fa-star"></i>{{mov.rating}}/10
+						</p>
+						<p class="group inner list-group-item-text">{{poprularMovi.movidesc}}</p>
+						<hr />
+						<p class="run-time">
+							<span>Run Time:{{mov.runTime}}</span><span>Release:
+								{{mov.relaseDate}}</span>
+						</p>
+						<p>
+							Movi Type: <a href="#">{{mov.genreType}} | {{mov.langType}}</a>
+						</p>
+						<p>
+							Director: <a href="#">{{mov.directors}}</a>
+						</p>
+						<p>
+							Stars: <a href="#">{{mov.stars}}</a>
+						</p>
+						<p>
+							Wify View: <a href="#">{{mov.viwers}}</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row" ng-init="popularMovi()" ng-hide="moviCategoryDetails">
+		<div class="col-xs-11 col-lg-11 col-md-11">
+			<ul class="nav nav-tabs text-center" role="tablist">
+				<li role="presentation" class="active"><a href="#movies"
+					ng-click="popularMovi()" aria-controls="movies" role="tab"
+					data-toggle="tab">Most Popular</a></li>
+				<li role="presentation"><a href="#toprated"
+					ng-click="topRatedMovi()" aria-controls="toprated" role="tab"
+					data-toggle="tab">Top Rated</a></li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="movies">
+					<div id="products" class="row list-group">
+						<div
+							class="item  col-xs-3 col-lg-3 grid-group-item list-group-item"
+							ng-repeat="poprularMovi in popularMovies">
+							<div class="thumbnail">
+								<a href="#" ng-click="playMovi(poprularMovi)"> <img
+									class="group list-group-image rounded"
+									src="{{poprularMovi.poster_url}}" alt="" /><span
+									class="play-button"></span></a>
+								<div class="caption">
+									<h4 class="group inner list-group-item-heading">{{poprularMovi.moviname}}</h4>
+									<p class="card-rating">
+										<i class="fa fa-star"></i>{{poprularMovi.rating}}/10
+									</p>
+									<p class="group inner list-group-item-text">{{poprularMovi.movidesc}}</p>
+									<hr />
+									<p class="run-time">
+										<span>Run Time:{{poprularMovi.runTime}}</span><span>Release:
+											{{poprularMovi.relaseDate}}</span>
+									</p>
+									<p>
+										Movi Type: <a href="#">{{poprularMovi.genreType}} |
+											{{poprularMovi.langType}}</a>
+									</p>
+									<p>
+										Director: <a href="#">{{poprularMovi.directors}}</a>
+									</p>
+									<p>
+										Stars: <a href="#">{{poprularMovi.stars}}</a>
+									</p>
+									<p>
+										Wify View: <a href="#">{{poprularMovi.viwers}}</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="toprated">
+					<div id="products" class="row list-group">
+						<div
+							class="item  col-xs-3 col-lg-3 grid-group-item list-group-item"
+							ng-repeat="topMovi in topMovies">
+							<div class="thumbnail">
+								<a href="#" ng-click="playMovi(topMovi)"> <img
+									class="group list-group-image rounded"
+									src="{{topMovi.poster_url}}" alt="" /><span
+									class="play-button"></span></a>
+
+								<div class="caption">
+									<h4 class="group inner list-group-item-heading">{{topMovi.moviname}}</h4>
+									<p class="card-rating">
+										<i class="fa fa-star"></i>{{topMovi.rating}}/10
+									</p>
+									<p class="group inner list-group-item-text">{{topMovi.movidesc}}</p>
+									<hr />
+									<p class="run-time">
+										<span>Run Time:{{topMovi.runTime}}</span><span>Release:
+											{{topMovi.relaseDate}}</span>
+									</p>
+									<p>
+										Movi Type: <a href="#">{{topMovi.genreType}} |
+											{{topMovi.langType}}</a>
+									</p>
+									<p>
+										Director: <a href="#">{{topMovi.directors}}</a>
+									</p>
+									<p>
+										Stars: <a href="#">{{topMovi.stars}}</a>
+									</p>
+									<p>
+										Wify View: <a href="#">{{topMovi.viwers}}</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section class="slider-container" ng-hide="playMoviSection">
+
+	<div class="videogular-container">
+		<videogular vg-theme="video.theme.url" vg-responsive="true"
+			vg-player-ready="onPlayerReady($API)"> <vg-media
+			vg-src="video.sources" vg-native-controls="true"> </vg-media> <vg-poster
+			vg-url="video.plugins.poster"></vg-poster> </videogular>
+	</div>
+	<div class="item  col-xs-4 col-lg-4 grid-group-item list-group-item">
+		<hr />
+		<div class="thumbnail">
+			<div class="caption">
+				<h4 class="group inner list-group-item-heading">{{playedmovi.moviname}}</h4>
+				<p class="card-rating">
+					<i class="fa fa-star"></i>{{playedmovi.rating}}/10
+				</p>
+				<p class="group inner list-group-item-text">{{playedmovi.movidesc}}</p>
+
+				<p class="run-time">
+					<span>Run Time:{{playedmovi.runTime}}</span><span>Release:
+						{{playedmovi.relaseDate}}</span>
+				</p>
+				<p>
+					Movi Type: <a href="#">{{playedmovi.genreType}} |
+						{{playedmovi.langType}}</a>
+				</p>
+				<p>
+					Director: <a href="#">{{playedmovi.directors}}</a>
+				</p>
+				<p>
+					Stars: <a href="#">{{playedmovi.stars}}</a>
+				</p>
+				<p>
+					Wify View: <a href="#">{{playedmovi.viwers}}</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+<!-- View Resturant Menus -->
+<section class="slider-container" ng-hide="viewResturantMenus">
+<h2>Hotel Menus </h2>
+
+<div class="item-cart pull-right">
+	<span>Total {{cart.totalquantity}} Items: <strong>{{cart.totalprice}} </strong></span><button class="link-service">Review Order</button>
+</div>
+<div class="col-md-12" id="ex-tab-menu" ng-click="getMenus()">
+	<ul class="nav nav-tabs">
+			<li><a  href="#breakfast" data-toggle="tab" ng-click="getBreakfastMenus()">Breakfast</a></li>
+			<li><a  href="#lunch" data-toggle="tab" ng-click="getLunchMenus()">Lunch</a></li>
+		    <li><a  href="#dinner" data-toggle="tab" ng-click="getDinnerMenus()">Dinner</a></li>
+			<li><a  href="#snaks" data-toggle="tab" ng-click="getSnaksMenus()">Snaks/Tapas</a></li>
+			<li><a  href="#offers" data-toggle="tab" ng-click="getOffersMenus()">Offers</a></li>
+		</ul>
+
+			<div class="tab-content">
+			  <div class="tab-pane active" id="breakfast">
+			  <div class="col-md-3 col-sm-3"  ng-repeat="bmenu in breakfastMenuList">
+												<div class="sub-item">
+													<div class="add-to-cart">
+														<h4>{{bmenu.name}}</h4>
+														<span class="menu-details">{{bmenu.description}}</span>
+														<span class="m-price"><i class="fa fa-inr" aria-hidden="true"></i> {{bmenu.price}}</span>
+														<a class="pull-right" ng-click="addToCart(bmenu)"><i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i></a>
+													</div>
+													<span class="menu-tag"><img src="{{bmenu.categoryimg}}" alt=""></span>
+												</div>
+						</div>	
+			</div>
+			<div class="tab-pane" id="lunch">
+			  <div class="col-md-3 col-sm-3"  ng-repeat="lmenu in lunchMenuList">
+												<div class="sub-item">
+													<div class="add-to-cart">
+														<h4>{{lmenu.name}}</h4>
+														<span class="menu-details">{{lmenu.description}}</span>
+														<span class="m-price"><i class="fa fa-inr" aria-hidden="true"></i> {{lmenu.price}}</span>
+														<a class="pull-right" ng-click="addToCart(lmenu)"><i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i></a>
+													</div>
+													<span class="menu-tag"><img src="{{lmenu.categoryimg}}" alt=""></span>
+												</div>
+						</div>	
+			</div>
+            <div class="tab-pane" id="dinner">
+              <div class="col-md-3 col-sm-3"  ng-repeat="dmenu in dinnerMenuList">
+									<div class="sub-item">
+													<div class="add-to-cart">
+														<h4>{{dmenu.name}}</h4>
+														<span class="menu-details">{{dmenu.description}}</span>
+														<span class="m-price"><i class="fa fa-inr" aria-hidden="true"></i> {{dmenu.price}}</span>
+														<a class="pull-right" ng-click="addToCart(dmenu)"><i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i></a>
+													</div>
+													<span class="menu-tag"><img src="{{dmenu.categoryimg}}" alt=""></span>
+						   </div>
+						</div>	
+			</div>
+			<div class="tab-pane" id="snaks">
+			 <div class="col-md-3 col-sm-3"  ng-repeat="smenu in snaksMenuList">
+												<div class="sub-item">
+													<div class="add-to-cart">
+														<h4>{{smenu.name}}</h4>
+														<span class="menu-details">{{smenu.description}}</span>
+														<span class="m-price"><i class="fa fa-inr" aria-hidden="true"></i> {{smenu.price}}</span>
+														<a class="pull-right" ng-click="addToCart(smenu)"><i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i></a>
+													</div>
+													<span class="menu-tag"><img src="{{smenu.categoryimg}}" alt=""></span>
+									</div>
+						</div>	
+			</div>
+			<div class="tab-pane" id="offers">
+							<div class="col-md-3 col-sm-3" ng-repeat="offer in offersMenuList">
+												<div class="sub-item">
+													<div class="add-to-cart">
+														<h4>{{offer.name}}</h4>
+														<span class="menu-details">{{offer.description}}</span>
+														<span class="m-price"><i class="fa fa-inr" aria-hidden="true"></i> {{offer.price}}</span>
+														<a class="pull-right" ng-click="addToCart(offer)"><i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i></a>
+													</div>
+													<span class="menu-tag"><img src="{{offer.categoryimg}}" alt=""></span>
+												</div>
+									</div>	
+
+			</div>
+			</div>
+  </div>
+
+
+</section>
+
+
+<section class="slider-container" ng-hide="viewsoftwaerspanel">
+<h2>In WIFY Softwares </h2>
+
+<div class="card">
+  <a href="http://192.168.1.5:8090/wify/software/GoogleChrome.apk"><img src="http://192.168.1.5:8090/wify/software/Chrome.png" alt="Avatar" class="img-responsive" style="width:15%"></a>
+  <div class="container">
+    <h4><b>For Android</b></h4> 
+    <p><a href="http://192.168.1.5:8090/wify/software/GoogleChrome.apk">Google Chrome</a></p> 
+  </div>
+</div>
+</section>
+
+
+
+<script>
+var navMain = $(".navbar-collapse"); // avoid dependency on #id
+// "a:not([data-toggle])" - to avoid issues caused
+// when you have dropdown inside navbar
+navMain.on("click", "a:not([data-toggle])", null, function () {
+    navMain.collapse('hide');
+});
+</script>
