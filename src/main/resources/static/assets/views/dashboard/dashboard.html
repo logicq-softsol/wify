@@ -297,7 +297,7 @@
 <h2>Hotel Menus </h2>
 
 <div class="item-cart pull-right">
-	<span>Total {{cart.totalquantity}} Items: <strong>{{cart.totalprice}} </strong></span><button class="link-service">Review Order</button>
+	<span>Total {{totalquantity}} Items: <strong><i class="fa fa-inr" aria-hidden="true"></i> {{totalprice}} </strong></span><a href="#" ng-click="reviewOrderDetails()" class="link-service">Review Order</a>
 </div>
 <div class="col-md-12" id="ex-tab-menu" ng-click="getMenus()">
 	<ul class="nav nav-tabs">
@@ -382,16 +382,47 @@
 </section>
 
 
-<section class="slider-container" ng-hide="viewsoftwaerspanel">
-<h2>In WIFY Softwares </h2>
-
-<div class="card">
-  <a href="http://192.168.1.5:8090/wify/software/GoogleChrome.apk"><img src="http://192.168.1.5:8090/wify/software/Chrome.png" alt="Avatar" class="img-responsive" style="width:15%"></a>
-  <div class="container">
-    <h4><b>For Android</b></h4> 
-    <p><a href="http://192.168.1.5:8090/wify/software/GoogleChrome.apk">Google Chrome</a></p> 
-  </div>
-</div>
+<section class="slider-container" ng-show="reviewOrderpanel">
+				<div class="row-item padd15">
+								<div class="row clearfix col-md-7">
+									<div class="menu-details list-checkout clearfix">
+										<div class="restu-menu">
+											<div class="col-md-6 col-sm-6" ng-repeat="cartd in cartlist">
+												<div class="outer-area">
+													<h4 class="restu-item"><span>{{cartd.itemName}}<span class="menu-tag pull-right"><img src="{{cartd.categoryimg}}"></span></span><div class="item-price"><i class="fa fa-inr" aria-hidden="true"></i>{{cartd.totalMenuPrice}}</div></h4>
+													<div class="sell-item">
+														<div class="btn-holder">
+															<button class="less-item" ng-click="removeFromCart(cartd)">-</button><input type="text" placeholder="{{cartd.quantity}}"  class="form-control" ></input><button class="add-item" ng-click="cartQuantityAdd(cartd)">+</button>
+														</div>
+														<a href="#" class="remove-item" ng-click="removeFromCart(cartd)">Remove</a>
+													</div>
+												</div>
+											</div>
+									
+									
+										</div>
+																	
+									</div>	
+									<div class="clearfix"></div>
+									<div class="btn-cart-holder">
+									<a href="#" ng-click="addMoreMenuDetails()" class="link-service pull-right">Add More</a>
+									</div>
+								</div>
+								
+						<div class="col-md-5 col-sm-5">
+							<div class="row-item padd20">
+								<div class="cart-value">
+									<ul class="cart-item">
+										<li ng-repeat="cartd in cartlist"><small>{{cartd.quantity}}x</small> {{cartd.itemName}} <span>{{cartd.totalMenuPrice}}</span></li>
+									</ul>
+									<ul class="cart-item cart-value-total">
+										<li>Total <span><strong><i class="fa fa-inr" aria-hidden="true"></i> {{totalprice}}</strong></span></li>
+									</ul>
+									<a href="#" ng-click="confirmOrderDetails()" class="link-service pull-right">Confirm Order</a>
+								</div>
+							</div>
+						</div>
+							</div>
 </section>
 
 

@@ -349,22 +349,112 @@
 						        		}
 						        	
 						        	$scope.cartlist=[];
-						        	$scope.cart={};
-									$scope.cart.totalprice=0;
-									$scope.cart.totalquantity=0;
-								
+									$scope.totalprice=0;
+									$scope.totalquantity=0;
+									$scope.order={};
 						        	$scope.addToCart= function(menu) {
-						        		$scope.cart["menuId"]=menu.menuId;
-						        		$scope.cart["itemName"]=menu.name;
-						        		$scope.cart["category"]=menu.category;
-						        		$scope.cart["price"]=menu.price;
-						        		$scope.cart["quantity"]=1;
-						        		$scope.cart.totalprice=$scope.cart.totalprice+menu.price;
-						        		$scope.cart.totalquantity=$scope.cart.totalquantity+1;
-						        		$scope.cartlist.push($scope.cart);
+						        		
+						        		var index = $scope.findMenuIndex(menu);
+						        		if(index==-1){
+						        			$scope.cart={};
+						        			$scope.cart["menuId"]=menu.menuId;
+							        		$scope.cart["itemName"]=menu.name;
+							        		$scope.cart["category"]=menu.category;
+							        		$scope.cart["price"]=menu.price;
+							        		$scope.cart["quantity"]=1;
+							        		$scope.cart["totalMenuPrice"]=$scope.cart["quantity"]*menu.price;
+							        		$scope.totalprice=$scope.totalprice+menu.price;
+							        		$scope.totalquantity=$scope.totalquantity+1;
+							        		  if(menu.category == "VEG")
+							        			  $scope.cart["categoryimg"]='assets/html/img/foodtype/icon-veg.png';
+					        			      else
+					        			    	  $scope.cart["categoryimg"]='assets/html/img/foodtype/icon-non-veg.png';
+							        		  $scope.cartlist.push($scope.cart);
+						        		}else{
+						        			var value=$scope.cartlist[index];
+							        		if(null!=value){
+							        			if(value.menuId==menu.menuId){
+								        			value["quantity"]+=1;
+								        			value["totalMenuPrice"]=value["quantity"]*menu.price;
+								        			$scope.totalprice+=menu.price;
+								        			$scope.totalquantity+=1;
+								        	    }
+							        		}
+						        		}
+						        		
+	
+						        	}
+						        	
+						        
+						        	
+						        	$scope.cartQuantityAdd= function(menu) {
+						        		var index = $scope.findMenuIndex(menu);
+						        		var value=$scope.cartlist[index];
+						        		if(null!=value){
+						        			if(value.menuId==menu.menuId){
+							        			value["quantity"]+=1;
+							        			value["totalMenuPrice"]=value["quantity"]*menu.price;
+							        			$scope.totalprice+=menu.price;
+							        			$scope.totalquantity+=1;
+							        	    }
+						        		}
+						        		//$rootScope.$apply(); 
+						        	}
+						        	
+						        	
+						        	$scope.removeFromCart= function(menu) {
+						        		var index = $scope.findMenuIndex(menu);
+						        		var value=$scope.cartlist[index];
+						        		if(null!=value && value["quantity"]>1){
+						        			if(value.menuId==menu.menuId){
+							        			value["quantity"]-=1;
+							        			value["totalMenuPrice"]=value["quantity"]*menu.price;
+							        			$scope.totalprice-=menu.price;
+							        			$scope.totalquantity-=1;
+							        	    }
+						        		}else{
+						        			$scope.cartlist.splice(index,1);
+						        			$scope.totalprice-=menu.price;
+						        			$scope.totalquantity-=1;
+						        		}
+					        			//$rootScope.$apply(); 
+						        	}
+						        	
+						        	$scope.reviewOrderpanel=false;
+						        	$scope.reviewOrderDetails = function() {
+						        		$scope.reviewOrderpanel=true;
+						        		$scope.viewResturantMenus=true;
+						            	$scope.discoverHeader=true;
+									    $scope.discoverRecentMovis=true;
+										$scope.playMoviSection=true;
+										$scope.moviCategoryDetails=true;
+										$scope.moviSpecificeDetails=true;
+						        	}
+						        	
+						        	$scope.orderRequiredDetails= function() {
 						        		
 						        	}
+						        	
+						        	$scope.addMoreMenuDetails= function() {
+						        		$scope.viewResturantMenus=false;
+						            	$scope.discoverHeader=true;
+									    $scope.discoverRecentMovis=true;
+										$scope.playMoviSection=true;
+										$scope.moviCategoryDetails=true;
+										$scope.moviSpecificeDetails=true;
+										$scope.reviewOrderpanel=false;
+						        	}
 								
+						        	//Find index of element 
+						        	$scope.findMenuIndex = function(menu){
+						        		  for(var i = 0; i < $scope.cartlist.length; i++){
+							        	        if(angular.equals($scope.cartlist[i].menuId, menu.menuId)){
+							        	            return i;
+							        	        }
+							        	    };
+							        	    return -1;
+						        	}
+						        
 								
 					} ]);
 }());

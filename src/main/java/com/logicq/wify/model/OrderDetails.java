@@ -1,12 +1,12 @@
 package com.logicq.wify.model;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -23,23 +23,33 @@ public class OrderDetails {
 	@Column(name = "TOTAL_PRICE", nullable = false)
 	private Double totalPrice;
 
-	@Column(name = "OFFER_PRICE", nullable = false)
+	@Column(name = "OFFER_PRICE")
 	private Double offerPrice;
 
 	@Column(name = "PAYMENT_TYPE", nullable = false)
 	private String paymentType;
 
-	@Column(name = "ORDER_TIME")
+	@Column(name = "ORDER_TIME", nullable = false)
 	private Date orderTime;
 
-	@Column(name = "DESCRIPTION")
+	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
 
-	@Column(name = "TABLE_NO")
+	@Column(name = "TABLE_NO", nullable = false)
 	private Integer tableName;
 
-	@Column(name = "STATUS")
+	@Column(name = "STATUS", nullable = false)
 	private String orderStatus;
+
+	@Column(name = "MOBILE_NO")
+	private Integer mobileNo;
+
+	@Column(name = "USER_NAME")
+	private String userName;
+
+	@Lob
+	@Column(name = "ORDER_DETAILS", length = 1000000)
+	private byte[] orderDetails;
 
 	public String getOrderId() {
 		return orderId;
@@ -113,11 +123,37 @@ public class OrderDetails {
 		this.orderStatus = orderStatus;
 	}
 
+	public Integer getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(Integer mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public byte[] getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(byte[] orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderDetails [orderId=" + orderId + ", menuIds=" + menuIds + ", totalPrice=" + totalPrice
 				+ ", offerPrice=" + offerPrice + ", paymentType=" + paymentType + ", orderTime=" + orderTime
-				+ ", description=" + description + ", tableName=" + tableName + ", orderStatus=" + orderStatus + "]";
+				+ ", description=" + description + ", tableName=" + tableName + ", orderStatus=" + orderStatus
+				+ ", mobileNo=" + mobileNo + ", userName=" + userName + ", orderDetails="
+				+ Arrays.toString(orderDetails) + "]";
 	}
 
 }
