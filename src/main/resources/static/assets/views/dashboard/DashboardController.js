@@ -430,9 +430,21 @@
 										$scope.moviCategoryDetails=true;
 										$scope.moviSpecificeDetails=true;
 						        	}
-						        	
-						        	$scope.orderRequiredDetails= function() {
-						        		
+
+						        	$scope.confirmOrder= function() {
+						        		$scope.order.orderStatus="ORDER_RECIVED";
+						        		$scope.order.orderTime=new Date();
+						        		$scope.order.totalPrice=$scope.totalprice;
+						        		$scope.order.menuDetails=$scope.cartlist;
+						        		ResturantService.PlacedOrderDetails($scope).then(function (result) {
+						        			console.log("order placed");
+						        		},function (error){
+								    		var errormsg='Unable to get languages';
+											$exceptionHandler(errormsg);
+								    	});
+						        	}
+						        	$scope.closeOrder= function() {
+						        		$scope.order={};
 						        	}
 						        	
 						        	$scope.addMoreMenuDetails= function() {

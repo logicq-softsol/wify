@@ -13,17 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.logicq.wify.helper.ResturantHelper;
 import com.logicq.wify.model.Menu;
 import com.logicq.wify.model.OrderDetails;
 import com.logicq.wify.model.ResturantMenuTypes;
 import com.logicq.wify.repo.MenuRepository;
 import com.logicq.wify.repo.MenuTypeRepository;
 import com.logicq.wify.repo.OrderRepository;
+import com.logicq.wify.vo.OrderDetailsVO;
 
 @RestController
 @EnableAutoConfiguration
 @RequestMapping("/api/admin/resturant")
-public class ResturantDetails {
+public class ResturantDetailsController {
 
 	@Autowired
 	MenuRepository menuRepository;
@@ -33,6 +36,9 @@ public class ResturantDetails {
 
 	@Autowired
 	MenuTypeRepository menuTypeRepository;
+
+	@Autowired
+	ResturantHelper resturantHelper;
 
 	@RequestMapping(value = "/menu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Menu>> createMenu(@RequestBody Menu menu) {
@@ -109,8 +115,21 @@ public class ResturantDetails {
 	}
 
 	@RequestMapping(value = "/placedOrder", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<OrderDetails>> placeOrderForUser(@RequestBody OrderDetails orderDetails) {
-		orderRepository.save(orderDetails);
+	public ResponseEntity<List<OrderDetails>> placeOrderForUser(@RequestBody OrderDetailsVO orderDetails)
+			throws Exception {
+		if (null != orderDetails) {
+			orderRepository.save(resturantHelper.convertOrderDetailsVOToOrderDetails(orderDetails));
+		}
+
+		return new ResponseEntity<List<OrderDetails>>(orderRepository.findByTableName(orderDetails.getTableName()),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/orderStatus", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<OrderDetails>> updateOrderForUser(@RequestBody OrderDetails orderDetails) {
+		if (null != orderDetails) {
+			orderRepository.save(orderDetails);
+		}
 		return new ResponseEntity<List<OrderDetails>>(orderRepository.findByTableName(orderDetails.getTableName()),
 				HttpStatus.OK);
 	}

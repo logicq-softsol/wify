@@ -418,12 +418,52 @@
 									<ul class="cart-item cart-value-total">
 										<li>Total <span><strong><i class="fa fa-inr" aria-hidden="true"></i> {{totalprice}}</strong></span></li>
 									</ul>
-									<a href="#" ng-click="confirmOrderDetails()" class="link-service pull-right">Confirm Order</a>
+									<a  href=""  data-toggle="modal" data-target="#orderpredetails" class="link-service pull-right">Confirm Order</a>
 								</div>
 							</div>
 						</div>
 							</div>
 </section>
+
+
+
+<!-- Modal for order details-->
+<div id="orderpredetails" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+						<h4 class="title">Order Details</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Table Number*</label> 
+							<input type="text"	ng-model="order.tableName"  class="form-control" required="required">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Full Name*</label>
+							 <input	type="text"  ng-model="order.userName" class="form-control" required="required">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Mobile Number*</label>
+						     <input	type="text"  ng-model="order.mobileNo" class="form-control" required="required" pattern="[789][0-9]{9}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="confirmOrder()">I am Hungry</button>
+				<button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="closeOrder()">close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 

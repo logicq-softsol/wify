@@ -80,6 +80,17 @@
 					data : ''
 				})
 			},
+			
+			PlacedOrderDetails: function ($scope) {
+				return  $http({
+					method: 'POST',
+					url:AppConstants.hostName+AppConstants.OrderPlacedByUser,
+					// url:AppConstants.hostName+AppConstants.hostPort+AppConstants.applicationName+AppConstants.loginURL,
+					headers: {'Content-Type': 'application/json'} ,
+					dataType :'json',
+					data : $scope.order
+				})
+			},
 		}
 	}]);
 }());
