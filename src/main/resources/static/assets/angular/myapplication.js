@@ -30,7 +30,8 @@
 	   'MenuTypesURL' : 'api/admin/resturant/menuTypes',
 	   'MenuSingleURL' : 'api/admin/resturant/menu',
 	   'OrderPlacedByUser':'api/admin/resturant/placedOrder',
-		'OrderStatusUpdate':'api/admin/resturant/orderStatus'
+		'OrderStatusUpdate':'api/admin/resturant/orderStatus',
+		'OrdeExceptStatusURL':'api/admin/resturant/ordersExceptStatus'
 		   
 	}).directive('ngConfirmClick', [
 	                                   function(){

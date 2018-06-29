@@ -40,6 +40,9 @@ public class Menu {
 	@Column(name = "RATING")
 	private Double rating;
 
+	@Column(name = "KITCHEN_TIME")
+	private Double kitchenTime;
+
 	public Long getMenuId() {
 		return menuId;
 	}
@@ -112,13 +115,19 @@ public class Menu {
 		this.rating = rating;
 	}
 
+	public Double getKitchenTime() {
+		return kitchenTime;
+	}
+
+	public void setKitchenTime(Double kitchenTime) {
+		this.kitchenTime = kitchenTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Menu [menuId=" + menuId + ", name=" + name + ", price=" + price + ", offerPrice=" + offerPrice
 				+ ", type=" + type + ", category=" + category + ", avlType=" + avlType + ", description=" + description
-				+ ", rating=" + rating + "]";
+				+ ", rating=" + rating + ", kitchenTime=" + kitchenTime + "]";
 	}
-
-	
 
 }

@@ -10,7 +10,7 @@
   </div>
   <div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
-	         	<li class="service-link"><a href=""  ng-click="orderDetails()"><span class="link-service"><i class="fa fa-bell-o" aria-hidden="true"></i></span></a></li>
+	         	<li class="service-link"><a href=""  ng-click="pendingOrderDetails()"><span class="link-service">{{order.pedningOrderCount}}<i class="fa fa-bell-o" aria-hidden="true"></i></span></a></li>
 				<li class="service-link"><a href=""  data-toggle="modal" data-target="#menu" ng-click="addMenu()"><span class="link-service">Setup Menu</span></a></li>
 				<li class="service-link"><a href="" data-toggle="modal" data-target="#content" ng-click="setupContent()"><span class="link-service">Setup Content</span></a></li>
 					
@@ -58,7 +58,41 @@
 
 <div class="container list-items">
 	<div class="container-fluid">
-		<div class="col-lg-12 col-md-12" ng-hide="viewOrderDetails">
+	
+			
+	<div class="col-lg-12 col-md-12" ng-show="{{viewOrderDetails}}">
+			<div class="card card-nav-tabs">
+				<div class="card-header"   ng-init="getOrderDetails()">
+					<h4 class="title">Order Details</h4>
+				</div>
+				<div class="card-content table-responsive">
+					<table class="table table-hover">
+						<thead class="text-warning">
+						    <th>Order ID</th>
+							<th>Table No</th>
+							<th>Order By</th>
+							<th>Order Time</th>
+							<th>Status</th>
+							<th>Total Price</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="order in orderList">
+						    	<td><a>{{order.orderId}}<a></td>
+								<td>{{order.tableName}}</td>
+								<td>{{order.mobileNo}}</td>
+								<td>{{order.orderTime}}</td>
+								<td>{{order.orderStatus}}</td>
+								<td><i class="fa fa-inr" aria-hidden="true"></i> {{order.totalPrice}}</td>
+								<td><a href="" data-toggle="modal"
+									data-target="#orderDetails" ng-click="eachOrder(order)"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	
+		<div class="col-lg-12 col-md-12" ng-hide="{{viewOrderDetails}}">
 			<div class="card card-nav-tabs">
 				<div class="card-header"   ng-init="getMenus()">
 					<h4 class="title">Menu Details</h4>
@@ -76,7 +110,7 @@
 						<tbody>
 							<tr ng-repeat="menu in menuList">
 								<td>{{menu.name}}</td>
-								<td>{{menu.price}}</td>
+								<td><i class="fa fa-inr" aria-hidden="true"></i> {{menu.price}}</td>
 								<td>{{menu.avlType}}</td>
 								<td>{{menu.category}}</td>
 								<td>{{menu.type}}</td>
@@ -89,36 +123,7 @@
 				</div>
 			</div>
 		</div>
-		
-	<div class="col-lg-12 col-md-12" ng-show="viewOrderDetails">
-			<div class="card card-nav-tabs">
-				<div class="card-header"   ng-init="getOrderDetails()">
-					<h4 class="title">Order Details</h4>
-				</div>
-				<div class="card-content table-responsive">
-					<table class="table table-hover">
-						<thead class="text-warning">
-							<th>Table No</th>
-							<th>Order Time</th>
-							<th>Status</th>
-							<th>Total Price</th>
-							<th>Menus</th>
-						</thead>
-						<tbody>
-							<tr ng-repeat="order in orderList">
-								<td>{{order.tableName}}</td>
-								<td>{{order.orderTime}}</td>
-								<td>{{order.orderStatus}}</td>
-								<td><a>menus</a></td>
-								<td>{{order.totalPrice}}</td>
-								<td><a href="" data-toggle="modal"
-									data-target="#orderDetails" ng-click="eachOrder(order)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+
   
   </div>
 </div>
@@ -133,10 +138,22 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
+				<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Order ID</label> 
+							<input type="text"	ng-model="order.orderId"  class="form-control" disable>
+						</div>
+					</div>
 					<div class="col-md-4">
 						<div class="form-group label-floating">
 							<label class="control-label">Table No</label> 
 							<input type="text"	ng-model="order.tableName"  class="form-control" disable>
+						</div>
+					</div>
+						<div class="col-md-4">
+						<div class="form-group label-floating">
+							<label class="control-label">Mobile Number</label> 
+							<input type="text"	ng-model="order.mobileNo"  class="form-control" disable>
 						</div>
 					</div>
 					<div class="col-md-4">

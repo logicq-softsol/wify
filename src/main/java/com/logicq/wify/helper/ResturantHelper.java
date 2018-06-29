@@ -28,7 +28,7 @@ public class ResturantHelper {
 	public OrderDetails convertOrderDetailsVOToOrderDetails(OrderDetailsVO ordervo) throws JsonProcessingException {
 		OrderDetails orderDetails = new OrderDetails();
 		if (!StringUtils.isEmpty(ordervo.getDescription()))
-			orderDetails.setDescription(ordervo.getDescription());
+	    orderDetails.setDescription(ordervo.getDescription());
 		orderDetails.setMobileNo(ordervo.getMobileNo());
 		orderDetails.setUserName(ordervo.getUserName());
 		orderDetails.setTableName(ordervo.getTableName());

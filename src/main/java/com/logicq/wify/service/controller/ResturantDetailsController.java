@@ -7,13 +7,13 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.logicq.wify.helper.ResturantHelper;
 import com.logicq.wify.model.Menu;
 import com.logicq.wify.model.OrderDetails;
@@ -39,6 +39,9 @@ public class ResturantDetailsController {
 
 	@Autowired
 	ResturantHelper resturantHelper;
+
+	@Autowired
+	SimpMessagingTemplate brokerMessagingTemplate;
 
 	@RequestMapping(value = "/menu", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Menu>> createMenu(@RequestBody Menu menu) {
@@ -115,14 +118,19 @@ public class ResturantDetailsController {
 	}
 
 	@RequestMapping(value = "/placedOrder", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<OrderDetails>> placeOrderForUser(@RequestBody OrderDetailsVO orderDetails)
+	public ResponseEntity<OrderDetailsVO> placeOrderForUser(@RequestBody OrderDetailsVO orderDetailsVO)
 			throws Exception {
-		if (null != orderDetails) {
-			orderRepository.save(resturantHelper.convertOrderDetailsVOToOrderDetails(orderDetails));
+		if (null != orderDetailsVO) {
+			OrderDetails orderDetails = resturantHelper.convertOrderDetailsVOToOrderDetails(orderDetailsVO);
+			orderRepository.save(orderDetails);
+			List<OrderDetails> orderList = orderRepository.findByOrderStatusNot("PAID");
+			orderList.forEach(ord -> {
+				ord.setMenuDetails(null);
+			});
+			brokerMessagingTemplate.convertAndSend("/topics/orderPlaced", orderList);
 		}
 
-		return new ResponseEntity<List<OrderDetails>>(orderRepository.findByTableName(orderDetails.getTableName()),
-				HttpStatus.OK);
+		return new ResponseEntity<OrderDetailsVO>(orderDetailsVO, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/orderStatus", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -131,6 +139,13 @@ public class ResturantDetailsController {
 			orderRepository.save(orderDetails);
 		}
 		return new ResponseEntity<List<OrderDetails>>(orderRepository.findByTableName(orderDetails.getTableName()),
+				HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "/ordersExceptStatus/{status}", method = RequestMethod.GET)
+	public ResponseEntity<List<OrderDetails>> findAllOrderExceptStatus(@PathVariable String status) {
+		return new ResponseEntity<List<OrderDetails>>(orderRepository.findByOrderStatusNot(status),
 				HttpStatus.OK);
 	}
 

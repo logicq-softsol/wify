@@ -91,6 +91,25 @@
 					data : $scope.order
 				})
 			},
+			GetOrderDetailsForStatus: function ($scope) {
+				return  $http({
+					method: 'GET',
+					url:AppConstants.hostName+AppConstants.OrdersURL+"/"+$scope.status,
+					headers: {'Content-Type': 'application/json'} ,
+					dataType :'json',
+					data : ''
+				})
+			},	
+			
+			GetOrderDetailsForNotStatus: function ($scope) {
+				return  $http({
+					method: 'GET',
+					url:AppConstants.hostName+AppConstants.OrdeExceptStatusURL+"/"+$scope.status,
+					headers: {'Content-Type': 'application/json'} ,
+					dataType :'json',
+					data : ''
+				})
+			},	
 		}
 	}]);
 }());
