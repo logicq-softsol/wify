@@ -23,6 +23,7 @@
 						$scope.viewOrderDetails=true;
 						$scope.orderList=[];
 						$scope.order={};
+						$scope.adminfunctionDetails="Order Details";
 						
 						$scope.getMenus= function() {
 							ResturantService.GetMenus($scope).then(function (result) {
@@ -37,6 +38,7 @@
 							$scope.menu=menu;
 						}
 						$scope.addMenu= function(menu) {
+							$scope.adminfunctionDetails="Menu Details";
 							$scope.viewOrderDetails=false;
 							$scope.menu={};
 						}

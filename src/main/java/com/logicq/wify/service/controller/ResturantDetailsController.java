@@ -123,6 +123,7 @@ public class ResturantDetailsController {
 		if (null != orderDetailsVO) {
 			OrderDetails orderDetails = resturantHelper.convertOrderDetailsVOToOrderDetails(orderDetailsVO);
 			orderRepository.save(orderDetails);
+		
 			List<OrderDetails> orderList = orderRepository.findByOrderStatusNot("PAID");
 			orderList.forEach(ord -> {
 				ord.setMenuDetails(null);

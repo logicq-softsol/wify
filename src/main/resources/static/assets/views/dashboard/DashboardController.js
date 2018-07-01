@@ -47,6 +47,7 @@
 							$scope.playMoviSection=true;
 							$scope.moviCategoryDetails=true;
 							$scope.moviSpecificeDetails=true;
+							$scope.orderNotification=false;
 						}
 						
 						$scope.tabClick=function (value) {
@@ -111,6 +112,7 @@
 								$scope.playMoviSection=true;
 								$scope.moviCategoryDetails=true;
 								$scope.moviSpecificeDetails=false;
+								$scope.orderNotification=false;
 							   $scope.genres=gener.name;
 							 $scope.moviSearchContext=" Selected Genres : "+gener.name;
 							 DashboardService.GetMoviesAccordingToGenres($scope).then(function(result){
@@ -157,6 +159,7 @@
 								$scope.moviCategoryDetails=true;
 								$scope.moviSpecificeDetails=true;
 							    $scope.playMoviSection=false;
+							    $scope.orderNotification=false;
 		
 							 $scope.playedmovi=movi;
 								$scope.video = { sources: [{src: $sce.trustAsResourceUrl(movi.movisource), type: "video/mp4"}],
@@ -257,6 +260,7 @@
 										$scope.playMoviSection=true;
 										$scope.moviCategoryDetails=true;
 										$scope.moviSpecificeDetails=true;
+										$scope.orderNotification=false;
 									//	$scope.getMenus(null);
 						            }
 						            	
@@ -429,19 +433,34 @@
 										$scope.playMoviSection=true;
 										$scope.moviCategoryDetails=true;
 										$scope.moviSpecificeDetails=true;
+										$scope.orderNotification=false;
 						        	}
 
 						        	$scope.confirmOrder= function() {
+						     
 						        		$scope.order.orderStatus="ORDER_RECIVED";
 						        		$scope.order.orderTime=new Date();
 						        		$scope.order.totalPrice=$scope.totalprice;
 						        		$scope.order.menuDetails=$scope.cartlist;
 						        		ResturantService.PlacedOrderDetails($scope).then(function (result) {
-						        			console.log("order placed");
+						        			$scope.viewsoftwaerspanel=true;
+											$scope.discoverHeader=true;
+											$scope.discoverRecentMovis=true;
+											$scope.playMoviSection=true;
+											$scope.moviCategoryDetails=true;
+											$scope.moviSpecificeDetails=true;
+											$scope.viewResturantMenus=true;
+											$scope.reviewOrderpanel=false;
+							        		$scope.orderNotification=true;
+							        		
+							        		$scope.conformOrderlist=result.data;
+							        		//$scope.ordertotalprice=$scope.totalprice;
 						        		},function (error){
 								    		var errormsg='Unable to get languages';
 											$exceptionHandler(errormsg);
 								    	});
+						        		
+						        		
 						        	}
 						        	$scope.closeOrder= function() {
 						        		$scope.order={};
@@ -455,7 +474,20 @@
 										$scope.moviCategoryDetails=true;
 										$scope.moviSpecificeDetails=true;
 										$scope.reviewOrderpanel=false;
+										$scope.orderNotification=false;
 						        	}
+						        	$scope.viewCustomerOrderDetails= function() {
+						        		$scope.viewsoftwaerspanel=true;
+										$scope.discoverHeader=true;
+										$scope.discoverRecentMovis=true;
+										$scope.playMoviSection=true;
+										$scope.moviCategoryDetails=true;
+										$scope.moviSpecificeDetails=true;
+										$scope.viewResturantMenus=true;
+										$scope.reviewOrderpanel=false;
+						        		$scope.orderNotification=true;
+						        	}
+						        	
 								
 						        	//Find index of element 
 						        	$scope.findMenuIndex = function(menu){
