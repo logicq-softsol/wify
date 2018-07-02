@@ -21,11 +21,23 @@
 						$scope.menu={};
 						$scope.orderStatusList=[{"name":"ORDER_RECIVED"},{"name":"IN_KITCHEN"},{"name":"DELAY"},{"name":"15min Waiting"},{"name":"10min Waiting"},{"name":"30min Waiting"},{"name":"Served"},{"name":"Paymet Recived"}];
 						$scope.viewOrderDetails=true;
+						$scope.viewMenuDetails=false;
 						$scope.orderList=[];
 						$scope.order={};
 						$scope.adminfunctionDetails="Order Details";
+						$scope.pedningOrderCount=0;
+						
+						$scope.nextOrders=0;
+						$scope.previousOrders=0;
+						
+						$scope.nextMenus=0;
+						$scope.previousMenus=0;
+						
 						
 						$scope.getMenus= function() {
+							$scope.viewOrderDetails=false;
+							$scope.viewMenuDetails=true;
+							
 							ResturantService.GetMenus($scope).then(function (result) {
 								$scope.menuList=result.data;
 					    	},function (error){
@@ -44,7 +56,6 @@
 						}
 						
 						$scope.saveMenu= function() {
-							$scope.viewOrderDetails=false;
 							ResturantService.SaveMenu($scope).then(function (result) {
 								$scope.menuList=result.data;
 					    	},function (error){
@@ -62,12 +73,10 @@
 						}
 						
 						$scope.orderDetails= function() {
-							$scope.viewOrderDetails=true;
 							$scope.getOrderDetails();
 						}
 						
 						$scope.getOrderDetails= function() {
-							
 							ResturantService.GetOrderDetails($scope).then(function (result) {
 								$scope.orderList=result.data;
 					    	},function (error){
@@ -97,6 +106,20 @@
 					    	});
 						}
 						
+						
+						$scope.nextOrderDetails= function() {
+							
+						}
+						$scope.previousOrderDetails= function() {
+							
+						}
+						
+						$scope.nextMenuDetails= function() {
+							
+						}
+						$scope.previousMenuDetails= function() {
+							
+						}
 						
 						 
 						var stompClient = null;
