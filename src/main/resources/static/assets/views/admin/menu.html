@@ -54,38 +54,8 @@
   </div>
 </nav>
 
-
-<div class="container list-items" >
-     <h4>{{adminfunctionDetails}}</h4>
-	<div class="container-fluid">	
-    	<h4 class="title">Order Details</h4>	
-	<div  ng-init="getOrderDetails()">
-			<div class="card card-nav-tabs">
-			     
-				<div class="card-header"></div>
-				<div class="card-content">
-						<div class="col-md-3" ng-repeat="order in orderList">
-							<div class="card">
-								     <hr></hr>
-								<h5 class="pull-center">Order ID : {{order.orderId}} </h5>
-							    <h5>Table Name : {{order.tableName}} </h5>
-								<h5>Mobile No : {{order.mobileNo}} </h5>
-								<h5>Total Price : <i class="fa fa-inr" aria-hidden="true"></i> {{order.totalPrice}}</h5>
-								<h4>{{order.orderTime | date:'HH:mm:ss'}}</h4>
-								<h6> Status : {{order.orderStatus}}</h6>
-								   <hr></hr>
-								 <a  href="" data-toggle="modal" data-target="#menuDetails" ng-click="menuDetails(order)">View Menu</a>
-								 <a class="pull-right" href="" data-toggle="modal" data-target="#orderDetails" ng-click="eachOrder(order)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-							</div>
-						</div>
-				</div>
-			</div>
-		</div>
-    </div>
-</div>
     
-    
-   <div class="container list-items" ng-show={{viewMenuPanel}}> 
+   <div class="container list-items"> 
    <div class="container-fluid" > 
    <h4 class="title">Menu Details</h4>
          <a  href=""><span class="link-service" data-toggle="modal" data-target="#menu" ng-click="addMenu()">Add Menu</span></a>
@@ -116,66 +86,6 @@
   
       <hr></hr>
 </div>
-
-<!-- Modal -->
-<div id="orderDetails" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-						<h4 class="title">Order Details</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-				<div class="col-md-4">
-						<div class="form-group label-floating">
-							<label class="control-label">Order ID</label> 
-							<input type="text"	ng-model="order.orderId"  class="form-control" disable>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group label-floating">
-							<label class="control-label">Table No</label> 
-							<input type="text"	ng-model="order.tableName"  class="form-control" disable>
-						</div>
-					</div>
-						<div class="col-md-4">
-						<div class="form-group label-floating">
-							<label class="control-label">Mobile Number</label> 
-							<input type="text"	ng-model="order.mobileNo"  class="form-control" disable>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group label-floating">
-							<label class="control-label">Order Time</label>
-							 <input	type="text"  ng-model="order.orderTime" class="form-control" disable>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group label-floating">
-							<label class="control-label">Total Price</label>
-						     <input	type="text"  ng-model="order.totalPrice" class="form-control" disable>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group label-floating">
-							<label class="control-label">Order Status</label> 
-							 <input	type="text"  ng-model="order.orderStatus" class="form-control" list="orderStatusList">
-							 <datalist id="orderStatusList">
-							 <option ng-repeat="ordst in orderStatusList" value="{{ordst.name}}">
-							</datalist>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="updateOrder()">Save</button>
-				<button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="deleteOrder()">Delete</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <!-- Modal -->
 <div id="menu" class="modal fade" role="dialog">

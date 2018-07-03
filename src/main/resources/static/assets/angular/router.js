@@ -12,6 +12,11 @@
 					url : "/admin",
 					templateUrl : "assets/views/admin/admin.html",
 					controller : 'AdminController'
+				}),
+				$stateProvider.state('menu', {
+					url : "/menu",
+					templateUrl : "assets/views/admin/menu.html",
+					controller : 'AdminController'
 				})
 			});
 })();
